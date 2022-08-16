@@ -16,4 +16,4 @@ jobs:
           go-version: 1.18
 
       - name: Build binary
-        run: go get && go build .
+        run: go build .
