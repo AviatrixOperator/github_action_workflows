@@ -1,0 +1,19 @@
+name: golang-build
+
+on: workflow_call
+
+jobs:
+  golang-build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18
+
+      - name: Build binary
+        run: go get && go build .
