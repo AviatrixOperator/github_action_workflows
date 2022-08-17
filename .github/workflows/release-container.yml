@@ -33,10 +33,10 @@ jobs:
           registry: quay.io
       
       - name: Build image
-        run: podman build -t quay.io/AviatrixOperator/${{ inputs.repository }}:${{ inputs.tag }} .
+        run: podman build -t quay.io/avtxoperators/${{ inputs.repository }}:${{ inputs.tag }} .
   
       - name: Push To quay.io
         id: push-to-quay
         uses: redhat-actions/push-to-registry@v2
         with:
-          tags: quay.io/AviatrixOperator/${{ inputs.repository }}:${{ inputs.tag }}
+          tags: quay.io/avtxoperators/${{ inputs.repository }}:${{ inputs.tag }}
