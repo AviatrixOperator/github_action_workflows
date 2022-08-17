@@ -1,0 +1,39 @@
+name: Containerize and Release
+
+on: 
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
+    secrets:
+      podman-username:
+        description: 'Podman username to login to'
+        required: true
+      podman-password:
+        description: 'Password to login to podman'
+        required: true
+
+jobs:
+  release-containerize:
+    name: Release and Containerize
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log in to Quay.io
+        uses: redhat-actions/podman-login@v1
+        with:
+          username: ${{ secrets.podman-username }}
+          password: ${{ secrets.podman-password }}
+          registry: quay.io
+      
+      - name: Build image
+        run: podman build -t ${{ inputs.tag }} .
+  
+      - name: Push To quay.io
+        id: push-to-quay
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          tags: ${{ inputs.tag }}
